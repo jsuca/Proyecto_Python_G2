@@ -35,6 +35,7 @@ option = st.selectbox('Elegir departamento:', ('APURIMAC', 'HUANCAVELICA', 'CUSC
 st.write('Departamento seleccionado:', option)
 
 fig, ax = plt.subplots(figsize = (10,8))
-region_geojson[region_geojson.FIRST_NOMB == option].st.plot(ax = ax, edgecolor=u'gray', cmap='Pastel1')
-df_geo[df_geo['departamento'] == option].st.plot(ax = ax, color = 'black', markersize=2)
+region_geojson[region_geojson.FIRST_NOMB == option].plot(ax = ax, edgecolor=u'gray', cmap='Pastel1')
+df_geo[df_geo['departamento'] == option].plot(ax = ax, color = 'black', markersize=2)
 
+st.pyplot(fig)
