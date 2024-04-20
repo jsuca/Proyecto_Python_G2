@@ -50,6 +50,7 @@ else:
         region_geojson[region_geojson.FIRST_NOMB == departamento].plot(ax=ax, edgecolor=u'gray', color=color)
 
     df_seleccionado.plot(ax=ax, color='black', markersize=2)
+    ax.set_title('Centros de Vacunación por Departamento')
     st.pyplot(fig)
     
     provincias_counts = df_seleccionado['provincia'].value_counts()
@@ -66,3 +67,15 @@ else:
         ax_bar.legend(handles=legend_handles, title="Departamentos")
 
     st.pyplot(fig_bar)
+    
+    total_instancias = len(df_seleccionado)
+    porcentaje_por_departamento = df_seleccionado['departamento'].value_counts() / total_instancias * 100
+
+    colores_departamentos = [colors_bar[departamento] for departamento in porcentaje_por_departamento.index]
+
+    fig_pie, ax_pie = plt.subplots()
+    ax_pie.pie(porcentaje_por_departamento, labels=porcentaje_por_departamento.index, autopct='%1.1f%%', startangle=140, colors=colores_departamentos)
+    ax_pie.axis('equal')  
+    ax_pie.set_title('Porcentaje de Centros de Vacunación por departamento')
+    
+    st.pyplot(fig_pie)
