@@ -35,19 +35,22 @@ if not departamentos_seleccionados:
 else:
     df_seleccionado = df_geo[df_geo['departamento'].isin(departamentos_seleccionados)]
 
-    fig, ax = plt.subplots(figsize=(10, 8))
-    ax.set_aspect('equal')
-    
-    region_geojson[region_geojson.FIRST_NOMB.isin(departamentos_seleccionados)].plot(ax=ax, edgecolor=u'gray', cmap='Pastel1')
-    df_seleccionado.plot(ax=ax, color='black', markersize=2)
-    st.pyplot(fig)
-    
     departamentos_unicos = df_seleccionado['departamento'].unique()
     random.seed(89040)
     colors_bar = {}
     for departamento in departamentos_unicos:
         color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
         colors_bar[departamento] = color
+    
+    fig, ax = plt.subplots(figsize=(10, 8))
+    ax.set_aspect('equal')
+    
+    for departamento in departamentos_seleccionados:
+        color = colors_bar[departamento]
+        region_geojson[region_geojson.FIRST_NOMB == departamento].plot(ax=ax, edgecolor=u'gray', color=color)
+
+    df_seleccionado.plot(ax=ax, color='black', markersize=2)
+    st.pyplot(fig)
     
     provincias_counts = df_seleccionado['provincia'].value_counts()
     
